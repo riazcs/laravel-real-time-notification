@@ -20,7 +20,7 @@
 	    		console.log(notifications.value);
 	    	})
 
-	    	Echo.private('post_like.'+props.user.id)
+	    	Echo.private('users.'+props.user.id)
 	          .notification((notification) => {
 	            notifications.value.push(notification.notification);
 	            console.log(notification);

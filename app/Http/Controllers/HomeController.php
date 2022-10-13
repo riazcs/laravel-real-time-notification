@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostLikeNotificationEvent;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Notifications\PostLikeNotification;
@@ -34,11 +35,11 @@ class HomeController extends Controller
         $user = auth()->user();
 
         $post = Post::whereId($request->post_id)->with('user')->first();
-        // like code -----skip
         $author = $post->user;
 
+        broadcast(new PostLikeNotificationEvent($post->load('user')))->toOthers();
+        // $author->notify(new PostLikeNotification($user,$post));
         if($author){
-            $author->notify(new PostLikeNotification($user,$post));
         }
 
         return response()->json(['success']);

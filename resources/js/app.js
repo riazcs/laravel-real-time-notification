@@ -11,3 +11,10 @@ app.component('posts',Posts);
 app.mount("#app");
 
 
+
+// window.Echo.channel('LikeChannel')
+// .listen('realTimeNotifications', (e) => {
+
+//     console.log(e);
+
+// });
