@@ -70,7 +70,7 @@ export default {
 
 
     Echo.private("users." + this.user.id).notification((notification) => {
-      this.notifications.value.push(notification.notification);
+      this.notifications.push(notification.notification);
       console.log(notification);
     });
   },

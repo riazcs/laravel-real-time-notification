@@ -37,9 +37,9 @@ class HomeController extends Controller
         $post = Post::whereId($request->post_id)->with('user')->first();
         $author = $post->user;
 
-        broadcast(new PostLikeNotificationEvent($post->load('user')))->toOthers();
-        // $author->notify(new PostLikeNotification($user,$post));
+        // broadcast(new PostLikeNotificationEvent($post->load('user')))->toOthers();
         if($author){
+            $author->notify(new PostLikeNotification($user,$post));
         }
 
         return response()->json(['success']);

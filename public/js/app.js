@@ -22838,7 +22838,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log(notifs);
     });
     Echo["private"]("users." + this.user.id).notification(function (notification) {
-      _this.notifications.value.push(notification.notification);
+      _this.notifications.push(notification.notification);
       console.log(notification);
     });
   },
