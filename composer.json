@@ -11,7 +11,8 @@
         "laravel/framework": "8.29.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "v3.1",
-        "pusher/pusher-php-server": "5.0.1"
+        "pusher/pusher-php-server": "5.0.1",
+        "tcg/voyager": "^1.6"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
