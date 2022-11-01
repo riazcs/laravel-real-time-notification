@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    // $response = Http::get('https://jsonplaceholder.typicode.com/todos');
+    // return Http::get('http://example.com');
+    $details['email'] = 'riazul.cse.mbstu@gmail.com';
+    dispatch(new App\Jobs\SendEmailJob($details));
+    dd('done');
 });
 
 Auth::routes();
