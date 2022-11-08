@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
+    return view('welcome');
     // $response = Http::get('https://jsonplaceholder.typicode.com/todos');
     // return Http::get('http://example.com');
-    $details['email'] = 'riazul.cse.mbstu@gmail.com';
-    dispatch(new App\Jobs\SendEmailJob($details));
-    dd('done');
+    // $details['email'] = 'riazul.cse.mbstu@gmail.com';
+    // dispatch(new App\Jobs\SendEmailJob($details));
+    // dd('done');
 });
 
 Auth::routes();
@@ -30,4 +30,17 @@ Route::post('/post-like',[App\Http\Controllers\HomeController::class, 'postLike'
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+});
+
+
+Route::namespace('App\Http\Controllers')->group(function () {
+    Route::get('/csv_file', 'ExportImportController@index');
+    Route::get('csv_file/export', 'ExportImportController@csv_export')->name('export');
+    Route::post('csv_file/import', 'ExportImportController@csv_import')->name('import');
+
+
+    Route::get('/uploader', 'VideoController@uploader')->name('uploader');
+    Route::post('/upload', 'VideoController@store')->name('upload');
+    Route::get('/chunk-video', 'VideoController@chunkVideo')->name('chunk.video');
+    Route::post('/chunk-video-upload', 'VideoController@uploadLargeVideo')->name('chunk.video.upload');
 });

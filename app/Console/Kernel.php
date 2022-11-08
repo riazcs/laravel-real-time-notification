@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
 
     protected $commands = [
         Commands\DemoCron::class,
+        Commands\CompaniesEmailExportCommand::class,
     ];
 
     protected function schedule(Schedule $schedule)

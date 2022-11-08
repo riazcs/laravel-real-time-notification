@@ -15,11 +15,11 @@
         "laravel/framework": "8.29.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "v3.1",
+        "maatwebsite/excel": "^3.1",
+        "pbmedia/laravel-ffmpeg": "^7.5",
+        "pion/laravel-chunk-upload": "^1.5",
         "pusher/pusher-php-server": "5.0.1",
-        "tcg/voyager": "^1.6",
-        "psr/container": "^1.1.1|^2.0.1",
-        "psr/simple-cache": "^1.0|^2.0|^3.0",
-        "illuminate/contracts" : "^5.4"
+        "tcg/voyager": "^1.6"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
