@@ -41,6 +41,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
     Route::get('/uploader', 'VideoController@uploader')->name('uploader');
     Route::post('/upload', 'VideoController@store')->name('upload');
+
+    Route::get('/upload-videos', 'VideoController@index');
     Route::get('/chunk-video', 'VideoController@chunkVideo')->name('chunk.video');
     Route::post('/chunk-video-upload', 'VideoController@uploadLargeVideo')->name('chunk.video.upload');
 });

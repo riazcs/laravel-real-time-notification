@@ -52,9 +52,11 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
+        // add riaz
         'videos' => [
             'driver' => 'local',
-            'root' => storage_path('videos'),
+            // 'root' => storage_path('videos'),
+            'root'   => public_path() . '/'
         ],
     ],
 

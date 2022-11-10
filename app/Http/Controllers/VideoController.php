@@ -25,7 +25,7 @@ class VideoController extends Controller
         $this->a = '20';
         $this->sendValue($this->a);
         $videos = Video::orderBy('created_at', 'DESC')->get();
-        return view('videos')->with('videos', $videos);
+        return view('video.videos')->with('videos', $videos);
     }
 
     public function uploader()
@@ -87,26 +87,58 @@ class VideoController extends Controller
 
     public function uploadLargeVideo(Request $request)
     {
+        // return storage_path('app/videos/' . '127.0.0.1_8000_login_a4beb4fce26b020943942680be2da599.mp4');
         $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
-
         if (!$receiver->isUploaded()) {
-            // file not uploaded
+            return response()->json(['Failed']);
         }
 
         $fileReceived = $receiver->receive(); // receive file
         if ($fileReceived->isFinished()) { // file uploading is complete / all chunks are uploaded
             $file = $fileReceived->getFile(); // get file
             $extension = $file->getClientOriginalExtension();
-            $fileName = str_replace('.'.$extension, '', $file->getClientOriginalName()); //file name without extenstion
+            $fileName = str_replace('.' . $extension, '', $file->getClientOriginalName()); //file name without extenstion
             $fileName .= '_' . md5(time()) . '.' . $extension; // a unique file name
 
-            $disk = Storage::disk(config('filesystems.default'));
-            $path = $disk->putFileAs('videos', $file, $fileName);
+            // $disk = Storage::disk(config('filesystems.default'));
+            // $path = $disk->putFileAs('./public/uploads/videos/', $file, $fileName);
+
+            //Code add Riaz
+            // $videoDirectory = './uploads/videos/';
+            // if (!file_exists($videoDirectory)) {
+            //     mkdir($videoDirectory, 0777, true);
+            // }
+            // file_put_contents($videoDirectory . $fileName, $file);
+            $path = $file->store('uploads/videos', ['disk' => 'videos']);
+
+            //compress audio start
+            $compress_audio_directory = './uploads/videos/compress/';
+            if (!file_exists($compress_audio_directory)) {
+                mkdir($compress_audio_directory, 0777, true);
+            }
+            $compress_file_name_no_ext = 'compress_record_' . date('D') . rand(10, 1000);
+            $compress_file_name = $compress_file_name_no_ext . '.mp3';
+
+            $inputAudio = $path . $fileName;
+            $outputAudio = $compress_audio_directory . $fileName;
+            exec("ffmpeg -i $inputAudio -ab 64 $outputAudio"); // for audio
+            exec("ffmpeg -i $inputAudio -vcodec libx265 -crf 28 $outputAudio"); // for video
+            //end 
+
+            $video = new Video();
+            $video->path = $path;
+            $video->original_name = $fileName;
+            $video->save();
+
+            // Storage::move('old/file.jpg', 'new/file.jpg');
+            // Storage::move( $path, './uploads/videos/'. $fileName);
+            //End 
 
             // delete chunked file
             unlink($file->getPathname());
             return [
-                'path' => asset('storage/' . $path),
+                // 'path' => asset('storage/' . $path), // //comment by riaz
+                'path' => asset($path),  // add by riaz
                 'filename' => $fileName
             ];
         }

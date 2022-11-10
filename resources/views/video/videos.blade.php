@@ -7,24 +7,17 @@
         </h3>
         
         @foreach($videos as $video)
-            <div class="row mt-5">
-                <div class="video" >
-                    <div class="title">
-                        <h4>
-                            {{$video->title}}
-                        </h4>
-                    </div>
-                    @if($video->processed)
-                        <video src="/storage/{{$video->stream_path}}"
-                               class="w-100"
-                               controls></video>
-                    @else
-                        <div class="alert alert-info w-100">
-                             Video is currently being processed and will be available shortly
-                        </div>
-                    @endif
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5>Videos</h5>
+                </div>
+
+                <div class="card-body">
+                    <video src="{{asset($video->path)}}" controls="" style="width: 100%; height: auto"></video>
                 </div>
             </div>
+        </div>
         @endforeach
     </div>
 @endSection
